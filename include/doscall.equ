@@ -1,0 +1,129 @@
+	.nlist
+*
+* doscall.equ created from the following file:
+* doscall.mac X68k XC Compiler v2.11 Copyright 1990,93 SHARP/Hudson
+*
+DOS	macro	callname
+	dc.w	callname
+	endm
+
+EXIT		equ	$ff00
+GETCHAR		equ	$ff01
+PUTCHAR		equ	$ff02
+COMINP		equ	$ff03
+COMOUT		equ	$ff04
+PRNOUT		equ	$ff05
+INPOUT		equ	$ff06
+INKEY		equ	$ff07
+GETC		equ	$ff08
+PRINT		equ	$ff09
+GETS		equ	$ff0a
+KEYSNS		equ	$ff0b
+KFLUSH		equ	$ff0c
+FFLUSH		equ	$ff0d
+CHGDRV		equ	$ff0e
+CHDRV		equ	$ff0e
+DRVCTRL		equ	$ff0f
+CONSNS		equ	$ff10
+PRNSNS		equ	$ff11
+CINSNS		equ	$ff12
+COUTSNS		equ	$ff13
+*RESERVED		$ff14
+*RESERVED		$ff15
+*RESERVED		$ff16
+FATCHK		equ	$ff17
+*RESERVED		$ff18
+CURDRV		equ	$ff19
+GETSS		equ	$ff1a
+FGETC		equ	$ff1b
+FGETS		equ	$ff1c
+FPUTC		equ	$ff1d
+FPUTS		equ	$ff1e
+ALLCLOSE	equ	$ff1f
+SUPER		equ	$ff20
+FNCKEY		equ	$ff21
+KNJCTRL		equ	$ff22
+CONCTRL		equ	$ff23
+KEYCTRL		equ	$ff24
+INTVCS		equ	$ff25
+PSPSET		equ	$ff26
+GETTIM2		equ	$ff27
+SETTIM2		equ	$ff28
+NAMESTS		equ	$ff29
+GETDATE		equ	$ff2a
+SETDATE		equ	$ff2b
+GETTIME		equ	$ff2c
+SETTIME		equ	$ff2d
+VERIFY		equ	$ff2e
+DUP0		equ	$ff2f
+VERNUM		equ	$ff30
+KEEPPR		equ	$ff31
+GETDPB		equ	$ff32
+BREAKCK		equ	$ff33
+DRVXCHG		equ	$ff34
+INTVCG		equ	$ff35
+DSKFRE		equ	$ff36
+NAMECK		equ	$ff37
+MKDIR		equ	$ff39
+RMDIR		equ	$ff3a
+CHDIR		equ	$ff3b
+CREATE		equ	$ff3c
+OPEN		equ	$ff3d
+CLOSE		equ	$ff3e
+READ		equ	$ff3f
+WRITE		equ	$ff40
+DELETE		equ	$ff41
+SEEK		equ	$ff42
+CHMOD		equ	$ff43
+IOCTRL		equ	$ff44
+DUP		equ	$ff45
+DUP2		equ	$ff46
+CURDIR		equ	$ff47
+MALLOC		equ	$ff48
+MFREE		equ	$ff49
+SETBLOCK	equ	$ff4a
+EXEC		equ	$ff4b
+EXIT2		equ	$ff4c
+WAIT		equ	$ff4d
+FILES		equ	$ff4e
+NFILES		equ	$ff4f
+
+SETPDB		equ	$ff80	*50
+GETPDB		equ	$ff81	*51
+SETENV		equ	$ff82	*52
+GETENV		equ	$ff83	*53
+VERIFYG		equ	$ff84	*54
+COMMON		equ	$ff85	*55
+RENAME		equ	$ff86	*56
+FILEDATE	equ	$ff87	*57
+MALLOC2		equ	$ff88	*58
+MAKETMP		equ	$ff8A	*5a
+NEWFILE		equ	$ff8B	*5b
+LOCK		equ	$ff8C	*5c
+*RESERVED		$ff8E	*5e
+ASSIGN		equ	$ff8F	*5f
+FFLUSH_SET	equ	$ffAA	*7a
+OS_PATCH	equ	$ffAB	*7b
+GET_FCB_ADR	equ	$ffAC	*7c
+S_MALLOC	equ	$ffAD	*7d
+S_MFREE		equ	$ffAE	*7e
+S_PROCESS	equ	$ffAF	*7f
+
+EXITVC		equ	$fff0
+CTRLVC		equ	$fff1
+ERRJVC		equ	$fff2
+DISKRED		equ	$fff3
+DISKWRT		equ	$fff4
+INDOSFLG	equ	$fff5
+SUPER_JSR	equ	$fff6
+BUS_ERR		equ	$fff7
+OPEN_PR		equ	$fff8
+KILL_PR		equ	$fff9
+GET_PR		equ	$fffa
+SUSPEND		equ	$fffb
+SLEEP_PR	equ	$fffc
+SEND_PR		equ	$fffd
+TIME_PR		equ	$fffe
+CHANGE_PR	equ	$ffff
+
+	.list

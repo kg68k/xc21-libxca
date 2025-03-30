@@ -1,0 +1,827 @@
+	.nlist
+*
+* sxcall.equ created from the following file:
+* sxcall.mac X68k SX_SYSTEM ver 2.01 Copyright 1994 SHARP/First Class Technology
+*
+SX	macro	callname
+	dc.w	callname
+	endm
+*
+*************************************************
+*	メモリマン (Memory Man)			*
+*************************************************
+*
+MMInitHeap		equ	$A000
+MMGetCurrentHeap	equ	$A001
+MMSetCurrentHeap	equ	$A002
+MMNewHandle		equ	$A003
+MMSetHandleSize		equ	$A004
+MMDisposeHandle		equ	$A005
+MMGetHandleSize		equ	$A006
+MMHLock			equ	$A007
+MMHUnlock		equ	$A008
+MMNewPtr		equ	$A009
+MMDisposePtr		equ	$A00A
+MMGetPtrSize		equ	$A00B
+MMSetPtrSize		equ	$A00C
+MMCompactMem		equ	$A00D
+MMHeapInit		equ	$A00E
+MMBlockMstGet		equ	$A00F
+MMMemCompact		equ	$A010
+MMMemPurge		equ	$A011
+MMMemMelt		equ	$A012
+MMMemReserve		equ	$A013
+MMMemSizeFree		equ	$A014
+MMMemSizeComp		equ	$A015
+MMMemSizePurg		equ	$A016
+MMMemSizeMelt		equ	$A017
+MMMemErrorGet		equ	$A018
+MMMemErrorSet		equ	$A019
+MMChGet			equ	$A01C
+MMChSet			equ	$A01D
+MMChPtrNew		equ	$A01E
+MMChMstMore		equ	$A01F
+MMChMstNew		equ	$A020
+MMChHdlNew		equ	$A021
+MMChCompact		equ	$A022
+MMChPurge		equ	$A023
+MMChMelt		equ	$A024
+MMChReserve		equ	$A025
+MMChFreeSize		equ	$A026
+MMChGrowHeapGet		equ	$A027
+MMChGrowHeapSet		equ	$A028
+MMChPurgeGet		equ	$A029
+MMChPurgeSet		equ	$A02A
+MMChCompactGet		equ	$A02B
+MMChCompactSet		equ	$A02C
+MMPtrNew		equ	$A02D
+MMPtrHeap		equ	$A02E
+MMPtrDispose		equ	$A02F
+MMPtrSizeGet		equ	$A030
+MMPtrSizeSet		equ	$A031
+MMPtrPropGet		equ	$A032
+MMPtrPropSet		equ	$A033
+MMMstAllocate		equ	$A034
+MMMstBind		equ	$A035
+MMHdlNew		equ	$A036
+MMHdlHeap		equ	$A037
+MMHdlDispose		equ	$A038
+MMHdlSizeGet		equ	$A039
+MMHdlSizeSet		equ	$A03A
+MMHdlEmpty		equ	$A03B
+MMHdlRealloc		equ	$A03C
+MMHdlMoveHi		equ	$A03D
+MMHdlPropGet		equ	$A03E
+MMHdlPropSet		equ	$A03F
+MMHdlLock		equ	$A040
+MMHdlUnlock		equ	$A041
+MMHdlPurge		equ	$A042
+MMHdlNoPurge		equ	$A043
+MMHdlResource		equ	$A044
+MMHdlNoResource		equ	$A045
+MMHdlIns		equ	$A046
+MMHdlDel		equ	$A047
+MMBlockUsrFlagGet	equ	$A048
+MMBlockUsrFlagSet	equ	$A049
+MMBlockUsrWordGet	equ	$A04A
+MMBlockUsrWordSet	equ	$A04B
+MMMemAmiTPeach		equ	$A04C
+MMMemHiReserve		equ	$A04D
+MMPtrBlock		equ	$A04E
+MMHdlBlock		equ	$A04F
+MMHdlMstGet		equ	$A050
+MMChHiReserve		equ	$A051
+MMChUsrFlagGet		equ	$A052
+MMChUsrFlagSet		equ	$A053
+MMChUsrWordGet		equ	$A054
+MMChUsrWordSet		equ	$A055
+*
+*************************************************
+*	エクセプションマン (Exception Man)	*
+*************************************************
+*
+EXEnVDISPST		equ	$A068
+EXDeVDISPST		equ	$A069
+*
+*************************************************
+*	マウスマン (Mouse Man)			*
+*************************************************
+*
+MSInitCsr		equ	$A06A
+MSShowCsr		equ	$A06B
+MSHideCsr		equ	$A06C
+MSSetCsr		equ	$A06D
+MSObscureCsr		equ	$A06E
+MSShieldCsr		equ	$A06F
+MSGetCurMsr		equ	$A070
+MSMultiGet		equ	$A071
+MSMultiSet		equ	$A072
+*
+MSBoundGet		equ	$A076
+MSBoundSet		equ	$A077
+MSMove			equ	$A078
+*
+*************************************************
+*	アニメーションマン (Animation Man)	*
+*************************************************
+*
+EXAnimStart		equ	$A073
+EXAnimEnd		equ	$A074
+EXAnimTest		equ	$A075
+*
+*************************************************
+*	キーボードマン (Keyboard Man)		*
+*************************************************
+*
+KBMapGet		equ	$A086
+KBShiftGet		equ	$A087
+KBShiftSet		equ	$A088
+KBSimulate		equ	$A089
+KBScan			equ	$A08A
+KBGet			equ	$A08B
+KBEmpty			equ	$A08C
+KBInit			equ	$A08D
+KBTini			equ	$A08E
+KBCurKbrGet		equ	$A08F
+KBOldOnGet		equ	$A090
+KBOldOnSet		equ	$A091
+KBFlagGet		equ	$A092
+KBFlagSet		equ	$A093
+*
+*************************************************
+*	キーマン (Key Man)			*
+*************************************************
+*
+KMEmpty			equ	$A09A
+KMPost			equ	$A09B
+KMAscJobSet		equ	$A09C
+KMSimulate		equ	$A09D
+KMTask			equ	$A09E
+KMInit			equ	$A09F
+KMTini			equ	$A0A0
+KMCurKmrGet		equ	$A0A1
+*
+*************************************************
+*	イベントマン (Event Man)		*
+*************************************************
+*
+EMInit			equ	$A0A2
+EMTini			equ	$A0A3
+EMSet			equ	$A0A4
+EMGet			equ	$A0A5
+EMScan			equ	$A0A6
+EMMSLoc			equ	$A0A7
+EMLBttn			equ	$A0A8
+EMRBttn			equ	$A0A9
+EMLStill		equ	$A0AA
+EMRStill		equ	$A0AB
+EMLWait			equ	$A0AC
+EMRWait			equ	$A0AD
+EMKMapGet		equ	$A0AE
+EMSysTime		equ	$A0AF
+EMDClickGet		equ	$A0B0
+EMBlinkGet		equ	$A0B1
+EMClean			equ	$A0B2
+EMMaskSet		equ	$A0B3
+EMDClickSet		equ	$A0B5
+EMBlinkSet		equ	$A0B6
+EMEnCross		equ	$A0B7
+EMDeCross		equ	$A0B8
+*
+*************************************************
+*	リソースマン (Resource Man)		*
+*************************************************
+*
+RMInit			equ	$A0D9
+RMTini			equ	$A0DA
+RMResNew		equ	$A0DB
+RMRscAdd		equ	$A0DC
+RMRscRemove		equ	$A0DD
+RMTypeRemove		equ	$A0DE
+RMResDispose		equ	$A0DF
+RMResOpen		equ	$A0E0
+RMRscGet		equ	$A0E1
+RMResClose		equ	$A0E2
+RMResRemove		equ	$A0E3
+RMCurResSet		equ	$A0E4
+RMRscRelease		equ	$A0E5
+RMRscDetach		equ	$A0E6
+RMMaxIDGet		equ	$A0E7
+RMResSave		equ	$A0E8
+RMHdlToRsc		equ	$A0E9
+RMCurResGet		equ	$A0EA
+RMLastResGet		equ	$A0EB
+RMResLoad		equ	$A0EC
+RMResLinkGet		equ	$A0ED
+RMResTypeList		equ	$A0EE
+RMResIDList		equ	$A0EF
+*
+*************************************************
+*	グラフマン (Graph Man)			*
+*************************************************
+*
+GMOpenGraph		equ	$A12D
+GMCloseGraph		equ	$A12E
+GMInitGraph		equ	$A130
+GMSetGraph		equ	$A131
+GMGetGraph		equ	$A132
+GMCopyGraph		equ	$A133
+GMMoveGraph		equ	$A136
+GMSlideGraph		equ	$A137
+GMSetClip		equ	$A138
+GMGetClip		equ	$A139
+GMClipRect		equ	$A13A
+GMSetHome		equ	$A13B
+GMSetGraphSize		equ	$A13C
+GMSetBitmap		equ	$A13D
+GMLocalToGlobal		equ	$A13E
+GMGlobalToLocal		equ	$A13F
+GMInitPen		equ	$A140
+GMPenShow		equ	$A141
+GMPenHide		equ	$A142
+GMPenSize		equ	$A143
+GMPenMode		equ	$A144
+GMPenPat		equ	$A145
+GMExPat			equ	$A146
+GMForeColor		equ	$A147
+GMBackColor		equ	$A148
+GMAPage			equ	$A149
+GMGetLoc		equ	$A14A
+GMGetPen		equ	$A14B
+GMSetPen		equ	$A14C
+GMInitialize		equ	$A14D
+GMNullRect		equ	$A14E
+GMSizeRect		equ	$A14F
+GMAndRects		equ	$A150
+GMMoveRect		equ	$A151
+GMSlideRect		equ	$A152
+GMInsetRect		equ	$A153
+GMAndRect		equ	$A154
+GMOrRect		equ	$A155
+GMPtInRect		equ	$A156
+GMEqualRect		equ	$A157
+GMEmptyRect		equ	$A158
+GMAdjustRect		equ	$A159
+GMNewRgn		equ	$A15A
+GMDisposeRgn		equ	$A15B
+GMOpenRgn		equ	$A15C
+GMCloseRgn		equ	$A15D
+GMNullRgn		equ	$A15E
+GMRectRgn		equ	$A15F
+GMCopyRgn		equ	$A160
+GMMoveRgn		equ	$A161
+GMSlideRgn		equ	$A162
+GMInsetRgn		equ	$A163
+GMAndRgn		equ	$A164
+GMOrRgn			equ	$A165
+GMDiffRgn		equ	$A166
+GMXorRgn		equ	$A167
+GMPtInRgn		equ	$A168
+GMRectInRgn		equ	$A169
+GMEqualRgn		equ	$A16A
+GMEmptyRgn		equ	$A16B
+GMImgToRgn		equ	$A16C
+GMInitBitmap		equ	$A16D
+GMMove			equ	$A16E
+GMMoveRel		equ	$A16F
+GMLine			equ	$A170
+GMLineRel		equ	$A171
+GMFrameRect		equ	$A172
+GMFillRect		equ	$A173
+GMFrameOval		equ	$A174
+GMFillOval		equ	$A175
+GMFrameRRect		equ	$A176
+GMFillRRect		equ	$A177
+GMFrameArc		equ	$A178
+GMFillArc		equ	$A179
+GMFrameRgn		equ	$A17A
+GMFillRgn		equ	$A17B
+GMFramePoly		equ	$A17C
+GMFillPoly		equ	$A17D
+GMScroll		equ	$A17E
+GMCopy			equ	$A17F
+GMCopyMask		equ	$A180
+GMPlotImg		equ	$A182
+GMPutRImg		equ	$A183
+GMDupHImg		equ	$A186
+GMDupVImg		equ	$A187
+GMDupHRImg		equ	$A188
+GMDupVRImg		equ	$A189
+GMFontKind		equ	$A18B
+GMFontFace		equ	$A18C
+GMFontMode		equ	$A18D
+GMFontSize		equ	$A18E
+GMDrawChar		equ	$A18F
+GMDrawStrL		equ	$A190
+GMDrawStr		equ	$A191
+GMDrawStrZ		equ	$A192
+GMCharWidth		equ	$A194
+GMStrLWidth		equ	$A195
+GMStrWidth		equ	$A196
+GMStrLength		equ	$A197
+GMFontInfo		equ	$A198
+GMOpenScript		equ	$A199
+GMCloseScript		equ	$A19A
+GMDisposeScript		equ	$A19B
+GMDrawScript		equ	$A19C
+GMGetScript		equ	$A19D
+GMOpenPoly		equ	$A19E
+GMClosePoly		equ	$A19F
+GMDisposePoly		equ	$A1A0
+GMShadowStrZ		equ	$A1A1
+GMShadowRect		equ	$A1A2
+GMInvertRect		equ	$A1A3
+GMInvertBits		equ	$A1A5
+GMMapPt			equ	$A1A6
+GMMapRect		equ	$A1A7
+GMMapPoly		equ	$A1A8
+GMMapRgn		equ	$A1A9
+GMScalePt		equ	$A1AA
+GMInitPalet		equ	$A1AB
+GMDrawG16		equ	$A1AD
+GMGetPixel		equ	$A1AF
+GMCalcMask		equ	$A1B1
+GMCalcFrame		equ	$A1B2
+SXLongMul		equ	$A1B3
+SXFixRound		equ	$A1B4
+SXFixMul		equ	$A1B6
+SXFixDiv		equ	$A1B7
+GMGetFontTable		equ	$A1B8
+GMCopyStdProc		equ	$A1B9
+GMStrZWidth		equ	$A1BA
+GMTransImg		equ	$A1BB
+GMFillRImg		equ	$A1BC
+GMFillImg		equ	$A1BD
+GMSlidedRgn		equ	$A1BE
+GMPaintRgn		equ	$A1BF
+GMSetRgnLine		equ	$A1C0
+GMGetRgnLine		equ	$A1C1
+GMInitGraphMode		equ	$A1C2
+GMCurFont		equ	$A1C3
+GMGetScrnSize		equ	$A1C4
+GMExgGraph		equ	$A1C5
+GMExgBitmap		equ	$A1C6
+GMGetBitmap		equ	$A1C7
+GMCalcBitmap		equ	$A1C8
+GMCalcScrnSize		equ	$A1C9
+GMNewBits		equ	$A1CA
+GMDisposeBits		equ	$A1CB
+GMLockBits		equ	$A1CC
+GMUnlockBits		equ	$A1CD
+GMItalicRect		equ	$A1CE
+GMItalicRgn		equ	$A1CF
+GMFreeBits		equ	$A1D0
+GMCalcGraph		equ	$A1D1
+GMPackImage		equ	$A1D2
+GMUnpackImage		equ	$A1D3
+GMAdjustPt		equ	$A1D4
+GMPutImg		equ	$A1D5
+GMCenterRect		equ	$A1D6
+GMScrewRect		equ	$A1D7
+GMAndRectRgn		equ	$A1D8
+GMOrRectRgn		equ	$A1D9
+GMDiffRectRgn		equ	$A1DA
+GMXorRectRgn		equ	$A1DB
+GMCharKind		equ	$A1DC
+GMDiffRgnRect		equ	$A1DD
+GMAddFont		equ	$A1E0
+GMRemoveFont		equ	$A1E1
+GMGetFontLink		equ	$A1E2
+GMGetHProcTbl		equ	$A1E3
+GMGetStdProcTbl		equ	$A1E6
+GMGetFontProcTbl	equ	$A1E7
+GMGetRgnProcTbl		equ	$A1E8
+GMDrawGsOne		equ	$A1E9
+GMPtInImg		equ	$A1EA
+GMFrameNPoly		equ	$A1EB
+GMFillNPoly		equ	$A1EC
+GMNPolyFrRgn		equ	$A1ED
+GMNPolyFlRgn		equ	$A1EE
+GMPtInNPoly		equ	$A1EF
+GMPtOnNPoly		equ	$A1F0
+GMRecordScript		equ	$A1F1
+GMNLineRel		equ	$A1F2
+GMNLine			equ	$A1F3
+GMRecordPoly		equ	$A1F4
+*
+GMSetFlattness		equ	$A540
+GMGetFlattness		equ	$A541
+GMDrawBezier		equ	$A544
+GMDrawBSpline		equ	$A545
+GMSplitBezier		equ	$A546
+GMSplitBSpline		equ	$A547
+GMPtOnBezier		equ	$A548
+GMPtOnBSpline		equ	$A549
+GMSetBSError		equ	$A54A
+GMGetBSError		equ	$A54B
+GMSetGSDraw		equ	$A550
+GMGetGSDraw		equ	$A551
+GMSetGSGet		equ	$A552
+GMGetGSGet		equ	$A553
+*
+*************************************************
+*	ウィンドウマン (Window Man)		*
+*************************************************
+*
+WMInit			equ	$A1F8
+WMOpen			equ	$A1F9
+WMRefer			equ	$A1FA
+WMClose			equ	$A1FB
+WMDispose		equ	$A1FC
+WMFind			equ	$A1FD
+WMSelect		equ	$A1FE
+WMCarry2		equ	$A1FF
+WMCarry			equ	$A200
+WMShine			equ	$A201
+WMMove			equ	$A202
+WMSize			equ	$A203
+WMGrow			equ	$A204
+WMDrag			equ	$A205
+WMZoom			equ	$A206
+WMShow			equ	$A207
+WMHide			equ	$A208
+WMShowHide		equ	$A209
+WMCheckBox		equ	$A20A
+WMCheckCBox		equ	$A20B
+WMDrawGBox		equ	$A20C
+WMUpdate		equ	$A20D
+WMUpdtOver		equ	$A20E
+WMActive		equ	$A20F
+WMAddRect		equ	$A218
+WMAddRgn		equ	$A219
+WMSubRect		equ	$A21A
+WMSubRgn		equ	$A21B
+WMGScriptSet		equ	$A21C
+WMTitleSet		equ	$A21E
+WMTitleGet		equ	$A21F
+WMTIDSet		equ	$A220
+WMTIDGet		equ	$A221
+WMGetDTGS		equ	$A224
+WMDragRgn		equ	$A225
+*
+WMOptionGet		equ	$A22C
+WMOptionSet		equ	$A22D
+WMPtInGBox		equ	$A22E
+*
+*************************************************
+*	サブウィンドウマン (Sub Window Man)	*
+*************************************************
+*
+WSOpen			equ	$A227
+WSClose			equ	$A228
+WSDispose		equ	$A229
+WSEnlist		equ	$A22A
+WSDelist		equ	$A22B
+*
+*************************************************
+*	メニューマン (Menu Man)			*
+*************************************************
+*
+MNInit			equ	$A266
+MNRefer			equ	$A267
+MNSelect		equ	$A268
+MNConvert		equ	$A269
+MNSelect2		equ	$A26A
+*
+*************************************************
+*	コントロールマン (Control Man)		*
+*************************************************
+*
+CMOpen			equ	$A289
+CMDispose		equ	$A28A
+CMKill			equ	$A28B
+CMHide			equ	$A28C
+CMShow			equ	$A28D
+CMDraw			equ	$A28E
+CMDrawOne		equ	$A28F
+CMValueSet		equ	$A290
+CMValueGet		equ	$A291
+CMMinSet		equ	$A292
+CMMinGet		equ	$A293
+CMMaxSet		equ	$A294
+CMMaxGet		equ	$A295
+CMMove			equ	$A296
+CMSize			equ	$A297
+CMShine			equ	$A298
+CMFind			equ	$A299
+CMCheck			equ	$A29A
+CMRefer			equ	$A29B
+CMTitleGet		equ	$A29C
+CMDraws			equ	$A29E
+CMTitleSet		equ	$A29F
+CMOptionGet		equ	$A2A0
+CMOptionSet		equ	$A2A1
+CMUserGet		equ	$A2A2
+CMUserSet		equ	$A2A3
+CMProcGet		equ	$A2A4
+CMProcSet		equ	$A2A5
+CMDefDataGet		equ	$A2A6
+CMDefDataSet		equ	$A2A7
+*
+*************************************************
+*	ダイアログマン (Dialog Man)		*
+*************************************************
+*
+DMInit			equ	$A2C0
+DMFontSet		equ	$A2C2
+DMOpen			equ	$A2C3
+DMRefer			equ	$A2C4
+DMClose			equ	$A2C5
+DMDispose		equ	$A2C6
+DMControl		equ	$A2C7
+DMDraw			equ	$A2C8
+DIGet			equ	$A2CF
+DISet			equ	$A2D0
+DITGet			equ	$A2D1
+DITSet			equ	$A2D2
+DITSelect		equ	$A2D3
+DIUpdate		equ	$A2D6
+DMBeep			equ	$A2D7
+DIHide			equ	$A2D8
+DIShow			equ	$A2D9
+DMError			equ	$A2F6
+DMWaitOpen		equ	$A2F7
+DMWaitClose		equ	$A2F8
+DMWaitWhile		equ	$A2F9
+*
+*************************************************
+*	テキストマン (Text Man)			*
+*************************************************
+*
+TMInit			equ	$A30A
+TMSetRect		equ	$A30C
+TMChangeText		equ	$A30D
+TMIdle			equ	$A30E
+TMCaret			equ	$A311
+TMDispose		equ	$A312
+TMUpDate		equ	$A313
+TMSetText		equ	$A314
+TMGetText		equ	$A315
+TMSetSelect		equ	$A316
+TMKey			equ	$A317
+TMStr			equ	$A318
+TMCalText		equ	$A319
+TMPinScroll		equ	$A31A
+TMClick			equ	$A31B
+TMEvent			equ	$A31C
+TMCut			equ	$A320
+TMCopy			equ	$A321
+TMPaste			equ	$A322
+TMDelete		equ	$A323
+TMInsert		equ	$A324
+TMFromScrap		equ	$A325
+TMToScrap		equ	$A326
+TMScrapHandle		equ	$A327
+TMGetScrapLen		equ	$A328
+TMTextBox2		equ	$A32B
+TMCacheON		equ	$A32C
+TMCacheOFF		equ	$A32D
+TMCacheFlush		equ	$A32E
+TMShow			equ	$A32F
+TMHide			equ	$A330
+TMSelShow		equ	$A331
+TMSelHide		equ	$A332
+TMSearchStrF		equ	$A333
+TMSearchStrB		equ	$A334
+TMTextInWidth2		equ	$A335
+TMTextWidth2		equ	$A336
+TMDrawText2		equ	$A337
+TMUpDate2		equ	$A338
+TMUpDate3		equ	$A339
+TMCalCOLine		equ	$A33A
+TMCalLine		equ	$A33C
+TMLeftSel		equ	$A33D
+TMRightSel		equ	$A33E
+TMPointSel		equ	$A33F
+TMOffsetSel		equ	$A340
+TMPointToLine		equ	$A341
+TMCalSelPoint		equ	$A343
+TMSetView		equ	$A345
+TMScroll		equ	$A346
+TMPointScroll		equ	$A347
+TMStr2			equ	$A348
+TMKeyToAsk		equ	$A349
+TMNextCode		equ	$A34A
+TMSetTextH		equ	$A34B
+*
+TMOpen			equ	$A366
+*
+TMNew2			equ	$A401
+*
+TMNextCodeIn		equ	$A460
+TMSelReverse		equ	$A462
+TMTini			equ	$A463
+TMSetSelCal		equ	$A464
+TMActivate2		equ	$A465
+TMDeactivate2		equ	$A466
+TMCheckSel		equ	$A467
+TMCalPoint2		equ	$A468
+TMISZen			equ	$A46A
+TMSetDestOffset		equ	$A46B
+TMGetDestOffset		equ	$A46C
+TMGetSelect		equ	$A46D
+TMEventW		equ	$A46E
+TMUpDateExist		equ	$A46F
+*
+*************************************************
+*	タスクマン (Task Man)			*
+*************************************************
+*
+TSInitTsk		equ	$A34C
+TSInitCrtM		equ	$A34E
+TSTiniCrtM		equ	$A34F
+TSFock			equ	$A351
+TSExit			equ	$A352
+TSFockB			equ	$A353
+TSFockSItem		equ	$A355
+TSFockIcon		equ	$A356
+TSEventAvail		equ	$A357
+TSGetEvent		equ	$A358
+TSPostEventTsk		equ	$A35A
+TSGetTdb		equ	$A35B
+TSSetTdb		equ	$A35C
+TSGetWindowPos		equ	$A35E
+TSCommunicate		equ	$A35F
+TSGetID			equ	$A360
+TSMakeEvent		equ	$A361
+TSGetStartMode		equ	$A364
+TSSetStartMode		equ	$A365
+*
+TSOpen			equ	$A367
+TSClose			equ	$A368
+TSRmDirH		equ	$A369
+TSCopyH			equ	$A36A
+TSMkDirH		equ	$A36B
+TSMoveH			equ	$A36C
+TSCreate		equ	$A36D
+TSDeleteH		equ	$A36E
+TSTrash			equ	$A36F
+TSFiles			equ	$A370
+TSNFiles		equ	$A371
+TSCopyP			equ	$A372
+TSDeleteP		equ	$A373
+TSRmDirP		equ	$A374
+TSMkDirP		equ	$A375
+TSMoveP			equ	$A376
+TSChMod			equ	$A378
+TSWhatFile		equ	$A379
+TSDeleteVoname		equ	$A37B
+TSCreateVoname		equ	$A37C
+TSSearchFileND		equ	$A381
+TSGetOpen		equ	$A386
+TSZeroDrag		equ	$A387
+TSPutDrag		equ	$A388
+TSGetDrag		equ	$A389
+TSBeginDrag		equ	$A38A
+TSEndDrag		equ	$A38C
+TSHideDrag		equ	$A38D
+TSShowDrag		equ	$A38E
+TSZeroScrap		equ	$A38F
+TSPutScrap		equ	$A390
+TSGetScrap		equ	$A391
+TSSearchTrashpath	equ	$A397
+TSSearchTrashfile	equ	$A398
+TSEmptyTrash		equ	$A399
+TSSearchdpb		equ	$A39B
+TSDrvctrl		equ	$A39D
+TSDrvctrl2		equ	$A39E
+SXCallWindM		equ	$A3A2
+SXCallCtrlM		equ	$A3A3
+SXInvalScBar		equ	$A3AA
+SXValidScBar		equ	$A3AB
+TSISRecToStr		equ	$A3BB
+TSCreateISFile		equ	$A3BF
+SXFileConnPath		equ	$A3CC
+SXFileInPath		equ	$A3CD
+SXFnamecmp		equ	$A3D0
+SXSearchFname		equ	$A3D4
+SXStoLower		equ	$A3D8
+SXStoUpper		equ	$A3D9
+SXStoUpper2		equ	$A3DA
+SXVer			equ	$A3E9
+TSTakeParam		equ	$A3EA
+TSFindTskn		equ	$A3F4
+TSDriveCheckAll		equ	$A3F7
+TSDriveCheck		equ	$A3F8
+TSISRecToExec		equ	$A3F9
+TSGetDtopMode		equ	$A3FA
+TSSetDtopMode		equ	$A3FB
+TSSearchOpen		equ	$A3FC
+TSFindOwn		equ	$A3FE
+TSCommunicateS		equ	$A3FF
+*
+TSSearchFile2		equ	$A402
+TSSearchFile		equ	$A403
+SXStrCmp		equ	$A406
+TSCreateISBadge		equ	$A408
+TSGetCMDS		equ	$A40A
+TSFockCM		equ	$A40B
+TSTiniTsk		equ	$A40D
+TSPostEventTsk2		equ	$A415
+TSAnswer		equ	$A417
+TSSendMes		equ	$A418
+TSGetMes		equ	$A419
+TSInitTsk2		equ	$A41A
+SXCallWindM2		equ	$A41F
+TSBeginDrag2		equ	$A420
+SXGetVector		equ	$A422
+SXSetVector		equ	$A423
+TSCellToStr		equ	$A427
+SXLockFSX		equ	$A42A
+SXUnlockFSX		equ	$A42B
+TSFockMode		equ	$A42C
+TSSetGraphMode		equ	$A430
+TSGetGraphMode		equ	$A431
+SXGetDispRect		equ	$A432
+SXSRAMVer		equ	$A435
+SXSRAMReset		equ	$A436
+SXSRAMCheck		equ	$A437
+TSAdjustRect		equ	$A438
+TSPostEventTsk3		equ	$A43B
+TSAnswer2		equ	$A43E
+TSErrDialogN		equ	$A443
+TSSearchFile3		equ	$A446
+*
+TSResNew		equ	$A4A0
+TSResOpen		equ	$A4A1
+TSResClose		equ	$A4A2
+TSResSave		equ	$A4A3
+TSResRemove		equ	$A4A4
+TSResLoad		equ	$A4A5
+TSResDispose		equ	$A4A6
+TSCurResGet		equ	$A4A7
+TSLastResGet		equ	$A4A8
+TSCurResSet		equ	$A4A9
+TSRscAdd		equ	$A4AA
+TSRscGet		equ	$A4AB
+TSRscRemove		equ	$A4AC
+TSTypeRemove		equ	$A4AD
+TSRscRelease		equ	$A4AE
+TSRscDetach		equ	$A4AF
+TSMaxIDGet		equ	$A4B0
+TSHdlToRsc		equ	$A4B1
+TSResLinkGet		equ	$A4B2
+TSResRouteLink		equ	$A4B3
+TSResRouteGet		equ	$A4B4
+TSRscGet2		equ	$A4B5
+TSRscGet3		equ	$A4B6
+TSResRouteUnLink	equ	$A4B7
+TSMaxIDGet2		equ	$A4B8
+TSFind			equ	$A4B9
+TSCurResGet2		equ	$A4BA
+TSMaxIDGet3		equ	$A4BB
+TSResFileGet		equ	$A4BC
+TSResRouteFind		equ	$A4BD
+TSResTypeList		equ	$A4BE
+TSResIDList		equ	$A4BF
+*
+*************************************************
+*	プリントマン(Print Man)			*
+*************************************************
+*
+PMInit			equ	$A4E0
+PMTini			equ	$A4E1
+PMOpen			equ	$A4E2
+PMClose			equ	$A4E3
+PMSetDefault		equ	$A4E4
+PMValidate		equ	$A4E5
+PMImageDialog		equ	$A4E6
+PMStrDialog		equ	$A4E7
+PMEnvCopy		equ	$A4E9
+PMJobCopy		equ	$A4EA
+PMOpenImage		equ	$A4EB
+PMRecordPage		equ	$A4EC
+PMPrintPage		equ	$A4ED
+PMCancelPage		equ	$A4EE
+PMAction		equ	$A4EF
+PMCloseImage		equ	$A4F0
+PMDrawString		equ	$A4F1
+PMVer			equ	$A4F2
+PMDrvrVer		equ	$A4F3
+PMDrvrCtrl		equ	$A4F4
+PMDrvrID		equ	$A4F5
+PMDrvrHdl		equ	$A4F6
+PMMaxRect		equ	$A4F7
+PMSaveEnv		equ	$A4F8
+PMReady			equ	$A4F9
+PMProcPrint		equ	$A4FA
+PMDrvrInfo		equ	$A4FB
+*
+*************************************************
+*	フォントマン(Font Man)			*
+*************************************************
+*
+FMInit			equ	$A500
+FMTini			equ	$A501
+FMGetFontList		equ	$A502
+FMSetCacheSize		equ	$A503
+FMGetCacheSize		equ	$A504
+FMSetSpaceWidth		equ	$A505
+FMGetSpaceWidth		equ	$A506
+FMSetTracking		equ	$A507
+FMGetTracking		equ	$A508
+FMGetKerningWidth	equ	$A509
+FMFontMenuSelect	equ	$A50A
+FMGetFontPolyData	equ	$A50B
+*
+	.list
